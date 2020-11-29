@@ -38,6 +38,10 @@ function App() {
 
   }
 
+  const nextQuestion = () => {
+    
+  }
+
   return (
     <div className="App">
       <h1>Quiz</h1>
@@ -59,7 +63,12 @@ function App() {
           callback={checkAnswer} 
         /> 
       )}
-      
+      {
+        !gameOver&& !loading && userAnswer.length === questionNumber + 1 && questionNumber !== totalQuestions -1 ?
+        <button className="next" onClick={nextQuestion}>Next question</button>
+        :
+        null
+      }
 
     </div>
   );

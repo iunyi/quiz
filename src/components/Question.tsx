@@ -1,4 +1,4 @@
-import react from 'react';
+// import react from 'react';
 
 type Props = {
     question: string;
@@ -17,9 +17,9 @@ const Question: React.FC<Props> = ({ question, answers , callback, userAnswer, q
             </p>
             <p dangerouslySetInnerHTML={{ __html: question }}/>
             <div>
-                { answers.map( answer => {
+                { answers.map( (answer, index) => {
                     return (
-                        <div>
+                        <div key={index}>
                             <button disabled={userAnswer} onClick={callback}>
                                 <span dangerouslySetInnerHTML={{ __html: answer }}/>
                             </button>
