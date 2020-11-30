@@ -1,11 +1,11 @@
-// import react from 'react';
-import {AnswerObject} from './App'
+import React from 'react';
+import {AnswerState} from './App'
 
 type Props = {
     question: string;
     answers : string[];
-    callback: (e: React.MouseEvent<HTMLButtonElement>) => void;
-    userAnswer: AnswerObject | undefined;
+    handleClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    userAnswer: AnswerState | undefined;
     questionNumber: number;
     totalQuestions: number;
 }
@@ -13,28 +13,27 @@ type Props = {
 const Question: React.FC<Props> = ({ 
     question, 
     answers , 
-    callback, 
+    handleClick, 
     userAnswer, 
     questionNumber, 
     totalQuestions 
 }) => {
+    let answersJSX = answers.map((answer, index) => {
+        return (
+            <div key={index}>
+                <button onClick={handleClick} disabled={userAnswer ? true : false} value ={answer}>
+                    <span dangerouslySetInnerHTML={{ __html: answer }}/>
+                </button>
+            </div>
+        )
+    })
     return (
         <div>
             <p className="number">
                 Question: {questionNumber}/{totalQuestions}
             </p>
             <p dangerouslySetInnerHTML={{ __html: question }}/>
-            <div>
-                { answers.map( (answer, index) => {
-                    return (
-                        <div key={index}>
-                            <button disabled={userAnswer ? true : false} value ={answer} onClick={callback}>
-                                <span dangerouslySetInnerHTML={{ __html: answer }}/>
-                            </button>
-                        </div>
-                    )
-                })}
-            </div>
+            <div>{answersJSX}</div>
         </div>
     )
 }

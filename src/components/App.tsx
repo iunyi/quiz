@@ -3,7 +3,7 @@ import Question from './Question'
 import {Difficulty, QuestionState, fetchQuizQuestions} from '../services/api'
 import '../stylesheets/App.css';
 
-export type AnswerObject = {
+export type AnswerState = {
   question: string;
   answer: string;
   correct: boolean;
@@ -16,7 +16,7 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [questions, setQuestions] = useState<QuestionState[]>([]);
   const [questionNumber, setQuestionNumber] = useState(0);
-  const [userAnswer, setUserAnswer] = useState<AnswerObject[]>([]);
+  const [userAnswer, setUserAnswer] = useState<AnswerState[]>([]);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true); 
 
@@ -37,19 +37,25 @@ function App() {
     if (!gameOver) {
       let selectedAnswer = e.currentTarget.value
       let correct = questions[questionNumber].correct_answer === selectedAnswer;
-      if (correct) setScore(prev => prev +1);
-      let answerObject = {
+      
+      if (correct) {
+        setScore(prev => prev +1);
+      }
+
+      let answerState = {
         question: questions[questionNumber].question,
         answer: selectedAnswer,
         correct,
         correct_answer: questions[questionNumber].correct_answer,
       };
-      setUserAnswer((prev) => [...prev, answerObject])
+
+      setUserAnswer((prev) => [...prev, answerState])
     }
   }
 
   const nextQuestion = () => {
     const nextQuestion = questionNumber + 1;
+
     if (nextQuestion === totalQuestions) {
       setGameOver(true);
     } else {
@@ -60,14 +66,21 @@ function App() {
   return (
     <div className="App">
       <h1>Quiz</h1>
+      {/* Start button */}
       {
         gameOver || userAnswer.length === totalQuestions ? 
         (<button className="start" onClick={startQuiz}>Start</button>)
         :
         null
       }
+
+      {/* Score */}
       { !gameOver && <p className="score">Score: {score}</p> }
+
+      {/* Loading */}
       { loading && <p>Loading questions</p> }
+
+      {/* Question and answers */}
       { !loading && !gameOver && (
         <Question 
           questionNumber={questionNumber + 1} 
@@ -75,16 +88,17 @@ function App() {
           question={questions[questionNumber].question} 
           answers={questions[questionNumber].answers} 
           userAnswer={userAnswer ? userAnswer[questionNumber] : undefined} 
-          callback={checkAnswer} 
-        /> 
-      )}
+          handleClick={checkAnswer} 
+        />)
+      }
+
+      {/* Next-question button */}
       {
         !gameOver&& !loading && userAnswer.length === questionNumber + 1 && questionNumber !== totalQuestions -1 ?
         <button className="next" onClick={nextQuestion}>Next question</button>
         :
         null
       }
-
     </div>
   );
 }
