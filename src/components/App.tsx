@@ -2,9 +2,8 @@ import React, {useState} from 'react';
 import Question from './Question'
 import {Difficulty, QuestionState, fetchQuizQuestions} from '../services/api'
 import '../stylesheets/App.css';
-import { type } from 'os';
 
-type AnswerObject = {
+export type AnswerObject = {
   question: string;
   answer: string;
   correct: boolean;
@@ -35,11 +34,27 @@ function App() {
   }
 
   const checkAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
-
+    if (!gameOver) {
+      let selectedAnswer = e.currentTarget.value
+      let correct = questions[questionNumber].correct_answer === selectedAnswer;
+      if (correct) setScore(prev => prev +1);
+      let answerObject = {
+        question: questions[questionNumber].question,
+        answer: selectedAnswer,
+        correct,
+        correct_answer: questions[questionNumber].correct_answer,
+      };
+      setUserAnswer((prev) => [...prev, answerObject])
+    }
   }
 
   const nextQuestion = () => {
-    
+    const nextQuestion = questionNumber + 1;
+    if (nextQuestion === totalQuestions) {
+      setGameOver(true);
+    } else {
+      setQuestionNumber(nextQuestion);
+    }
   }
 
   return (
@@ -51,7 +66,7 @@ function App() {
         :
         null
       }
-      { !gameOver && <p className="score">Score:</p> }
+      { !gameOver && <p className="score">Score: {score}</p> }
       { loading && <p>Loading questions</p> }
       { !loading && !gameOver && (
         <Question 
@@ -59,7 +74,7 @@ function App() {
           totalQuestions={totalQuestions} 
           question={questions[questionNumber].question} 
           answers={questions[questionNumber].answers} 
-          userAnswer={userAnswer ? userAnswer : undefined} 
+          userAnswer={userAnswer ? userAnswer[questionNumber] : undefined} 
           callback={checkAnswer} 
         /> 
       )}
