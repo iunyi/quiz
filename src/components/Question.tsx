@@ -1,5 +1,6 @@
 import React from 'react';
-import {AnswerState} from './App'
+import { AnswerState } from './App'
+import { Wrapper, ButtonWrapper } from './Question.styles';
 
 type Props = {
     question: string;
@@ -20,22 +21,27 @@ const Question: React.FC<Props> = ({
 }) => {
     let answersJSX = answers.map((answer, index) => {
         return (
-            <div key={index}>
+            <ButtonWrapper 
+                className="button-wrapper"
+                key={index}
+                correct={userAnswer?.correct_answer === answer}
+                userClicked={userAnswer?.answer === answer}
+            >
                 <button onClick={handleClick} disabled={userAnswer ? true : false} value ={answer}>
                     <span dangerouslySetInnerHTML={{ __html: answer }}/>
                 </button>
-            </div>
+            </ButtonWrapper>
         )
     })
     return (
-        <div>
+        <Wrapper>
             <p className="number">
                 Question: {questionNumber}/{totalQuestions}
             </p>
-            <p dangerouslySetInnerHTML={{ __html: question }}/>
-            <div>{answersJSX}</div>
-        </div>
-    )
+            <p className="question" dangerouslySetInnerHTML={{ __html: question }}/>
+            <div className="answer">{answersJSX}</div>
+        </Wrapper>
+    )                                                                                                                                                                                                                                                                                                                                                           
 }
 
 export default Question;

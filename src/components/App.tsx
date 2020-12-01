@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import Question from './Question'
 import {Difficulty, QuestionState, fetchQuizQuestions} from '../services/api'
-import '../stylesheets/App.css';
+// import '../stylesheets/App.css';
+import { GlobalStyle, Wrapper } from './App.styles';
 
 export type AnswerState = {
   question: string;
@@ -64,42 +65,51 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <h1>Quiz</h1>
-      {/* Start button */}
-      {
-        gameOver || userAnswer.length === totalQuestions ? 
-        (<button className="start" onClick={startQuiz}>Start</button>)
-        :
-        null
-      }
+    <>
+      <GlobalStyle />
+      <Wrapper>
+        <h1 className="title">Quiz</h1>
+        {/* Start button */}
+        {
+          gameOver || userAnswer.length === totalQuestions ? 
+          (<button className="start" onClick={startQuiz}>Start</button>)
+          :
+          null
+        }
 
-      {/* Score */}
-      { !gameOver && <p className="score">Score: {score}</p> }
+        {/* Score */}
+        { !gameOver && !loading && <p className="score">Score: {score}</p> }
 
-      {/* Loading */}
-      { loading && <p>Loading questions</p> }
+        {/* Loading */}
+        { loading && (
+          <p>  
+            <i className="fas fa-spinner fa-pulse"></i>
+          </p>)
+        }
 
-      {/* Question and answers */}
-      { !loading && !gameOver && (
-        <Question 
-          questionNumber={questionNumber + 1} 
-          totalQuestions={totalQuestions} 
-          question={questions[questionNumber].question} 
-          answers={questions[questionNumber].answers} 
-          userAnswer={userAnswer ? userAnswer[questionNumber] : undefined} 
-          handleClick={checkAnswer} 
-        />)
-      }
+        {/* Question and answers */}
+        { !loading && !gameOver && (
+          <Question 
+            questionNumber={questionNumber + 1} 
+            totalQuestions={totalQuestions} 
+            question={questions[questionNumber].question} 
+            answers={questions[questionNumber].answers} 
+            userAnswer={userAnswer ? userAnswer[questionNumber] : undefined} 
+            handleClick={checkAnswer} 
+          />)
+        }
 
-      {/* Next-question button */}
-      {
-        !gameOver&& !loading && userAnswer.length === questionNumber + 1 && questionNumber !== totalQuestions -1 ?
-        <button className="next" onClick={nextQuestion}>Next question</button>
-        :
-        null
-      }
-    </div>
+        {/* Next-question button */}
+        {
+          !gameOver&& !loading && userAnswer.length === questionNumber + 1 && questionNumber !== totalQuestions -1 ?
+          <div className="next-wrapper">
+            <button className="next" onClick={nextQuestion}>Next question</button>
+          </div>
+          :
+          null
+        }
+      </Wrapper>
+    </>
   );
 }
 
