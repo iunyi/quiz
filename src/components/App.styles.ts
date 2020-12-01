@@ -35,19 +35,17 @@ export const Wrapper = styled.div`
     margin-top: 40px;
 
     .title {
-        height: 10vh;    
+        height: 10vh; 
+        min-height: 30px;   
     }
 
     .score {
-        height: 10vh;
-    }
-
-    .number {
-        color: #7D87A1;
+        min-height: 30px;   
     }
 
     .next-wrapper {
-        height: 10vh;    
+        height: 10vh;  
+        min-height: 120px;  
     }
 
     .start, .next {
@@ -57,6 +55,7 @@ export const Wrapper = styled.div`
         height: 40px;
         margin: 20px 0;
         padding: 0 40px;
-        // background-color: white;
+        color: white;
+        background-color: #565F76;
     }
 `

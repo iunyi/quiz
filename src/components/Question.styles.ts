@@ -5,18 +5,22 @@ export const Wrapper = styled.div`
 
     .number {
         height: 10vh;
+        min-height: 30px;
+        color: #7D87A1;
         margin: 0 40px;
     }
 
     .question {
         height: 10vh;
-        font-weight: 700;
+        min-height: 80px;
         min-width: 250px;
+        font-weight: 700;
         margin: 0 40px;
     }
 
     .answer {
         height: 40vh;
+        min-height: 220px;
     }
 ` 
 
@@ -50,7 +54,6 @@ export const ButtonWrapper = styled.div<ButtonWrapperProps>`
                     '#C76B84'
                     :
                     'white'
-
         };
         border: none;
         border-radius: 8px;
