@@ -1,12 +1,8 @@
-# Title
+# Quiz App
 
-- [Available Scripts](##-available-scripts)
+A simple quiz game developed using React and TypeScript where ten random questions with their possible answers are fetched from an API every time the user clicks on the Start button.
 
-- [Description](##-description)
-
-- [Licence & Copyright](##-licence-&-copyright)
-
-—-
+![Quiz preview](./src/images/readme/quiz-preview.gif)
 
 ## Available Scripts
 
@@ -31,17 +27,3 @@ Launches the test runner in the interactive watch mode. See the section about [
 Builds the app for production to the `build` folder. It correctly bundles React in production mode and optimizes the build for the best performance.
 
 The build is minified and the filenames include the hashes. Your app is ready to be deployed!
-
-—-
-
-## Description
-
-A simple quiz game developed using React and TypeScript where ten random questions with their possible answers are fetched from an API every time the user clicks on the Start button.
-
-![Quiz preview](./src/images/readme/quiz-preview.gif)
-
-## Licence & Copyright
-
-Development: [Junyi Ji](mailto: junyiji@gmail.com)
-
-2020
